@@ -21,13 +21,21 @@
 		.cases {
 		  fill: none;
 		  stroke: steelblue;
-		  stroke-width: 1.5px;
 		}
 		
 		.deaths {
 			fill: none;
 			stroke: #8A0707;
-			stroke-width: 1.5px;
+		}
+
+		.textDeath {
+			fill: #8A0707;
+			stroke: none;
+		}
+
+		.textCases {
+			fill: steelblue;
+			stroke: none;
 		}
 
 	</style>
@@ -40,7 +48,8 @@
 Ebola Cases 2014
 
 <div>
-	<p><a href="http://www.doctorswithoutborders.org/our-work/medical-issues/ebola">Learn</a></p>
+	<p><a href="http://www.vox.com/cards/ebola-outbreak-2014/why-is-ebola-in-the-news">A comprehensive overview of the 2014 ebola outbreak @ vox.com</a></p>
+	<p><a href="http://www.doctorswithoutborders.org/our-work/medical-issues/ebola">Learn about the efforts of MSF</a></p>
 	<p><a href="https://donate.doctorswithoutborders.org/onetime.cfm">Donate to the MSF (Doctors Without Borders) general fund, even though they are fully funded in their Ebola efforts in West Africa.</a></p>
 	<p><a href="https://give.wfp.org/en/?step=country">Donate to WFP (World Food Program), which is feeding people in affected quarantine zones.</a></p>
 	<p>The WHO warns that the crisis may be <a href="https://www.google.com/search?q=ebola+underestimate&oq=ebola+und&aqs=chrome.0.69i59j69i57j0l4.1300j0j7&sourceid=chrome&es_sm=91&ie=UTF-8#q=ebola+underestimate&tbm=nws">vastly underestimated.</a></p>
@@ -92,6 +101,18 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+svg.append("text")
+	.attr("x", 100)
+	.attr("y", 100)
+	.text("Deaths")
+	.attr("class", "textDeath")
+
+svg.append("text")
+	.attr("x", 100)
+	.attr("y", 85)
+	.text("Cases")
+	.attr("class", "textCases")
+
 function addAxis (data) {
 
   x.domain(d3.extent(data, function(d) { return d.date; }));
@@ -110,7 +131,7 @@ function addAxis (data) {
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Cases");
+      .text("People");
 
 }
 
