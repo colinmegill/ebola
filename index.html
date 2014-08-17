@@ -18,11 +18,18 @@
 		  display: none;
 		}
 
-		.line {
+		.cases {
 		  fill: none;
 		  stroke: steelblue;
 		  stroke-width: 1.5px;
 		}
+		
+		.deaths {
+			fill: none;
+			stroke: #8A0707;
+			stroke-width: 1.5px;
+		}
+
 	</style>
 </head>
 <body>
@@ -30,9 +37,15 @@
 
 
 
-ebola cases 2014
+Ebola Cases 2014
 
-
+<div>
+	<p><a href="http://www.doctorswithoutborders.org/our-work/medical-issues/ebola">Learn</a></p>
+	<p><a href="https://donate.doctorswithoutborders.org/onetime.cfm">Donate to the MSF (Doctors Without Borders) general fund, even though they are fully funded in their Ebola efforts in West Africa.</a></p>
+	<p><a href="https://give.wfp.org/en/?step=country">Donate to WFP (World Food Program), which is feeding people in affected quarantine zones.</a></p>
+	<p>The WHO warns that the crisis may be <a href="https://www.google.com/search?q=ebola+underestimate&oq=ebola+und&aqs=chrome.0.69i59j69i57j0l4.1300j0j7&sourceid=chrome&es_sm=91&ie=UTF-8#q=ebola+underestimate&tbm=nws">vastly underestimated.</a></p>
+	<p><a href="http://healthmap.org/ebola/">Data</a></p>
+</div>
 
 
 
@@ -41,7 +54,7 @@ ebola cases 2014
 
 
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
 <script type="text/javascript">
 
@@ -65,9 +78,13 @@ var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-var line = d3.svg.line()
+var casesLine = d3.svg.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.cases); });
+
+var deathLine = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.deaths); });
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -75,11 +92,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-function visualize (data) {
-  
-  data = _.each(data, function(d){
-  	d.date = parseDate(d.date);
-  })
+function addAxis (data) {
 
   x.domain(d3.extent(data, function(d) { return d.date; }));
   y.domain(d3.extent(data, function(d) { return d.cases; }));
@@ -99,16 +112,42 @@ function visualize (data) {
       .style("text-anchor", "end")
       .text("Cases");
 
-  svg.append("path")
+}
+
+
+function addCasesLine (data) {
+
+	  svg.append("path")
       .datum(data)
-      .attr("class", "line")
-      .attr("d", line);
+      .attr("class", "cases")
+      .attr("d", casesLine)
+}
+
+function addDeathLine (data) {
+		  svg.append("path")
+      .datum(data)
+      .attr("class", "deaths")
+      .attr("d", deathLine)
+}
+
+
+function visualize (data) {
+
+	 data = _.each(data, function(d){
+  	d.date = parseDate(d.date);
+  })
+
+	addAxis(data);
+	addCasesLine(data);  
+	addDeathLine(data)
+
 };
 
 d3.json("/ebola", function(error, json) {
   if (error) return console.warn(error);
   data = json;
   visualize(data);
+  console.log(data)
 });
 
 </script>
