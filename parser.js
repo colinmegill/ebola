@@ -17,9 +17,11 @@ function parseSite (body) {
   $("#issues li").each(function(i, elem){
 		var a = $(this).find(".cases")
 		var d = $(this).find(".date")
+		var b = $(this).find(".deaths")
 		dataset["day_"+i] = {
 			date: d.text(),
-			cases: a.text()
+			cases: a.text(),
+			deaths: b.text()
 		}
   })
   return dataset;
@@ -34,17 +36,28 @@ function cleanup (dataset) {
 	})
 	var removeWords = _.each(withoutEmptyDatesOrCases, function(entry){
 		entry.cases = entry.cases.replace(/cases/g, "");
+		entry.deaths = entry.deaths.replace(/deaths/g, "")
+		entry.deaths = entry.deaths.replace(/death/g, "")
+
 	})
 	var splitNumbers = _.each(removeWords, function(entry){
-		entry.cases = entry.cases.split(" ")
+		entry.cases = entry.cases.split(" ");
+		entry.deaths = entry.deaths.split(" ");
 	})
 	var sum = _.each(splitNumbers, function(entry){
-		var s = 0;
+		var caseSum = 0;
+		var deathSum = 0;
 		entry.cases.forEach(function(d){
-			s += +d
+			caseSum += +d;
 		})
-		entry.cases = s;
+		entry.deaths.forEach(function(d){
+			deathSum += +d;
+		})
+		entry.cases = caseSum;
+		entry.deaths = deathSum;
 	})
+
+	console.log(sum)
 	return sum;
 }
 
