@@ -68,6 +68,7 @@ Ebola Cases 2014
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+<script type="text/javascript" src="http://bit.ly/ss-js"></script>
 <script type="text/javascript">
 
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
@@ -166,6 +167,27 @@ function visualize (data) {
 	addDeathLine(data)
 
 };
+
+
+function expFit(xys) {
+  var xys_ = _.map(data, function(xy) {
+      return [xy[0], Math.log(xy[1])]
+      });
+  var linFit = ss.linear_regression().data(xys_);
+  var expFun = function(x) {
+    return Math.exp(linFit.m() * x + linFit.b());
+  };
+  return expFun;
+}
+
+
+function fitData(data, variable) {
+  var forFit = _.map(data, function(d) {
+      return [d.date.vlaueOf(), d[variable]];
+      });
+  return expFit(forFit);
+}
+
 
 d3.json("/ebola", function(error, json) {
   if (error) return console.warn(error);

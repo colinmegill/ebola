@@ -4,6 +4,7 @@
   "description": "",
   "main": "parser.js",
   "dependencies": {
+    "simple-statistics": "~0.8.1",
     "cheerio": "~0.17.0",
     "express": "~4.8.4",
     "request": "~2.40.0",
