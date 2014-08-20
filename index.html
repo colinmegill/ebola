@@ -2,70 +2,353 @@
 <html>
 <meta charset="utf-8">
 <head>
+	<script type="text/javascript" src="//use.typekit.net/xhb3qda.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	<style>
+		html {
+			background-attachment: fixed;
+			background-image: url("vectorized-virion.svg");
+			background-size: 200%;
+			background-position: -190px -480px;
+		}
+
 		body {
-		  font: 10px sans-serif;
+			margin: 0;
+
+			background: linear-gradient(to bottom, rgba(192, 221, 235, 0.75), rgba(192, 221, 235, 1));
+			color: #333;
+			font-family: freight-sans-pro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size: 24px;
+			text-rendering: optimizeLegibility;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		a {
+			color: rgba(29, 92, 122, 0.75);
+			font-weight: 600;
+			text-decoration: none;
+		}
+
+		a:hover,
+		a:focus {
+			color: rgba(197, 93, 34, 0.75);
+		}
+
+		.Container {
+			width: 90%;
+			max-width: 1024px;
+			margin: 0 auto;
+		}
+
+		.Header {
+			margin-bottom: -20px;
+			padding: 40px 0 0;
+			overflow: hidden;
+
+			text-align: right;
+		}
+
+		.Headline {
+			position: relative;
+
+			display: inline-block;
+			margin: 0 12px 0 0;
+			padding: 24px 36px 0;
+
+			color: rgba(57, 73, 82, 1);
+			font-family: freight-big-pro, Georgia, "Times New Roman", serif;
+			font-size: 120px;
+			font-style: italic;
+			font-weight: 900;
+			line-height: 1;
+			text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+			text-rendering: optimizeLegibility;
+
+			font-style: normal;
+			font-weight: 300;
+		}
+
+		.Subheading {
+			margin-top: 0;
+			margin-bottom: 24px;
+
+			color: rgba(57, 73, 82, 1);
+			font-family: freight-big-pro;
+			font-size: 84px;
+			font-weight: 400;
+			text-align: center;
+			text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+			text-rendering: optimizeLegibility;
+		}
+
+		.Kicker {
+			position: relative;
+
+			margin: 0 0 60px;
+
+			font-size: 28px;
+			line-height: 1.25;
+		}
+
+		.Kicker--backdrop {
+			margin: 0;
+			padding: 46px 0 50px;
+		}
+
+		.Kicker--backdrop:before {
+			content: "";
+			z-index: -1;
+			position: absolute;
+			top: -26px;
+			right: -300px;
+			bottom: -26px;
+			left: -70px;
+
+			display: block;
+
+			background: rgba(255, 255, 255, 0.8);
+			box-shadow: inset 0 -2px 0 #fff;
+			transform: skew(-12.5deg);
+		}
+
+		.Chart {
+			position: relative;
+
+			margin: 0 0 30px;
+			padding: 32px 0 42px;
+
+			background: rgba(0,0,0,0.7);
+			box-shadow: none;
+		}
+
+		.Chart svg {
+			display: block;
+			margin: 0 auto;
+
+			fill: #fff;
+			font-size: 16px;
+			font-weight: 600;
+			text-shadow: 0 -1px 0 rgba(0,0,0,0);
 		}
 
 		.axis path,
 		.axis line {
-		  fill: none;
-		  stroke: #000;
-		  shape-rendering: crispEdges;
+			fill: none;
+			shape-rendering: crispEdges;
 		}
 
-		.x.axis path {
-		  display: none;
+		.axis path {
+			stroke: rgba(255,255,255,0.2);
+		}
+
+		.axis line {
+			stroke: rgba(255,255,255,0.3);
 		}
 
 		.cases {
-		  fill: none;
-		  stroke: steelblue;
+			fill: none;
+			stroke: rgba(151, 197, 235, 1);
+			stroke-width: 4px;
 		}
-		
+
 		.deaths {
 			fill: none;
-			stroke: #8A0707;
+			stroke: rgba(236, 120, 120, 1);
+			stroke-width: 4px;
 		}
 
 		.textDeath {
-			fill: #8A0707;
+			fill: rgba(236, 120, 120, 1);
+			font-size: 18px;
+			font-weight: 700;
+			letter-spacing: 0.03em;
 			stroke: none;
 		}
 
 		.textCases {
-			fill: steelblue;
+			fill: rgba(151, 197, 235, 1);
+			font-size: 18px;
+			font-weight: 700;
+			letter-spacing: 0.03em;
 			stroke: none;
 		}
 
+		.AngleBtn {
+			position: relative;
+
+			display: inline-block;
+			padding: 0.9em 1.4em 1em;
+
+			color: #524E41;
+			font-size: 24px;
+			font-weight: 900;
+			letter-spacing: 0.03em;
+			line-height: 1;
+			text-decoration: none;
+			text-transform: uppercase;
+			text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+			text-rendering: optimizeLegibility;
+		}
+
+		.AngleBtn:hover,
+		.AngleBtn:focus {
+			color: #524E41;
+		}
+
+		.AngleBtn:before {
+			content: "";
+
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+
+			display: block;
+			border: 1px solid #9B8C48;
+			border-top-color: #ACA796;
+
+			background: #FFF0B2;
+			background-image: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0));
+			box-shadow: 1px 1px 0px rgba(0,0,0,0.15);
+			transform: skew(-13deg);
+		}
+
+		.AngleBtn:hover:before,
+		.AngleBtn:focus:before {
+			background: #FFF7D5;
+		}
+
+		.AngleBtn span {
+			position: relative;
+		}
+
+		.Highlight {
+			margin: 80px auto 0;
+			padding-left: 0;
+			padding: 24px 30px 28px;
+			border: 1px solid rgba(97, 119, 129, 0.5);
+
+			background-image: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0));
+			background-color: rgba(255,255,255,0.5);
+			box-shadow: 0px 1px 1px rgba(0,0,0,0.1), inset 0 1px 0 #fff;
+			color: rgba(0,0,0,0.6);
+			font-size: 20px;
+			font-weight: 500;
+			line-height: 1;
+		}
+
+		.Highlight-list {
+			margin: 0;
+			padding-left: 20px;
+
+			list-style: none;
+		}
+
+		.Highlight-list li {
+			position: relative;
+			margin-bottom: 16px;
+		}
+
+		.Highlight-list li:last-child {
+			margin-bottom: 0;
+		}
+
+		.Highlight-list li:before {
+			content: "";
+
+			position: absolute;
+			top: 7px;
+			left: -20px;
+
+			display: block;
+			width: 4px;
+			height: 4px;
+			border: 1px solid rgba(0,0,0,0.4);
+			border-radius: 50%;
+		}
+
+		.Footer {
+			overflow: hidden;
+
+			margin-top: 200px;
+			padding-top: 24px;
+			border-top: 1px solid rgba(157, 183, 197, 1);
+
+			background: rgba(255,255,255,0.4);
+			box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+			color: rgba(93, 102, 107, 1);
+		}
+
+		.SubtleHeading {
+			margin-top: 0;
+			padding-bottom: 300px;
+
+			font-weight: 300;
+			text-align: center;
+		}
+
+		.u-Overflow {
+			overflow: hidden;
+		}
+
+		.u-AlignCenter {
+			text-align: center;
+		}
+
+		.u-AlignRight {
+			text-align: right;
+		}
 	</style>
 </head>
 <body>
 
+<header class="Header">
+	<h1 class="Headline">Ebola in 2014</h1>
+</header>
 
-
-
-Ebola Cases 2014
-
-<p>This site is auto updating. It is always based on <a href="http://healthmap.org/ebola/">the most recent data posted to healthmap.</a> We built it because we kept asking the questions: what's the rate of increase? Is it exponential? How do rates of new cases compare to deaths? This question was obscured by other charts, and we didn't just want the answer once - we wanted it every day.</p>
-
-<div>
-	<p><a href="http://www.vox.com/cards/ebola-outbreak-2014/why-is-ebola-in-the-news">Find a comprehensive overview of the 2014 ebola outbreak @ vox.com</a></p>
-	<p><a href="http://www.doctorswithoutborders.org/our-work/medical-issues/ebola">Learn about the efforts of MSF (Doctors Without Borders).</a></p>
-	<p><a href="https://donate.doctorswithoutborders.org/onetime.cfm">Donate to the MSF (Doctors Without Borders) general fund, even though they are fully funded in their Ebola efforts in West Africa.</a></p>
-	<p><a href="https://give.wfp.org/en/?step=country">Donate to WFP (World Food Program), which is feeding people in affected quarantine zones.</a></p>
-	<p>The WHO warns that the crisis may be <a href="https://www.google.com/search?q=ebola+underestimate&oq=ebola+und&aqs=chrome.0.69i59j69i57j0l4.1300j0j7&sourceid=chrome&es_sm=91&ie=UTF-8#q=ebola+underestimate&tbm=nws">vastly underestimated.</a></p>
-	
-
+<div class="u-Overflow">
+	<div class="Container">
+		<p class="Kicker Kicker--backdrop">This site is auto updating. It is always based on <a href="http://healthmap.org/ebola/">the most recent data posted to healthmap.</a> We built it because we kept asking the questions: what's the rate of increase? Is it exponential? How do rates of new cases compare to deaths? This question was obscured by other charts, and we didn't just want the answer once - we wanted it every day.</p>
+	</div>
 </div>
 
+<div class="Chart"></div>
+
+<div class="Container">
+	<h2 class="Subheading">How you can help</h2>
+
+	<p class="Kicker">The World Food Program WFP is a lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+	<p class="u-AlignCenter">
+		<a class="AngleBtn" href="https://give.wfp.org/en/?step=country">
+			<span>Donate to WFP</span>
+		</a>
+	</p>
+
+	<div class="Highlight">
+		<ul class="Highlight-list">
+			<li><a href="http://www.vox.com/cards/ebola-outbreak-2014/why-is-ebola-in-the-news">Find a comprehensive overview of the 2014 ebola outbreak @ vox.com</a></li>
+			<li><a href="http://www.doctorswithoutborders.org/our-work/medical-issues/ebola">Learn about the efforts of MSF (Doctors Without Borders).</a></li>
+			<li><a href="https://donate.doctorswithoutborders.org/onetime.cfm">Donate to the MSF (Doctors Without Borders) general fund, even though they are fully funded in their Ebola efforts in West Africa.</a></li>
+			<li><a href="https://give.wfp.org/en/?step=country">Donate to WFP (World Food Program), which is feeding people in affected quarantine zones.</a></li>
+			<li>The WHO warns that the crisis may be <a href="https://www.google.com/search?q=ebola+underestimate&oq=ebola+und&aqs=chrome.0.69i59j69i57j0l4.1300j0j7&sourceid=chrome&es_sm=91&ie=UTF-8#q=ebola+underestimate&tbm=nws">vastly underestimated.</a></li>
+		</ul>
+	</div>
+</div>
+
+<footer class="Footer">
+	<h2 class="SubtleHeading">A collaboration</h2>
+
+
+</footer>
 
 
 
 
 
 
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
 <script type="text/javascript" src="http://bit.ly/ss-js"></script>
@@ -99,21 +382,21 @@ var deathLine = d3.svg.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.deaths); });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select(".Chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+  	.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 svg.append("text")
-	.attr("x", 100)
-	.attr("y", 100)
+	.attr("x", 50)
+	.attr("y", "75%")
 	.text("Deaths")
 	.attr("class", "textDeath")
 
 svg.append("text")
-	.attr("x", 100)
-	.attr("y", 85)
+	.attr("x", 50)
+	.attr("y", "70%")
 	.text("Cases")
 	.attr("class", "textCases")
 
@@ -130,13 +413,11 @@ function addAxis (data) {
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
-    .append("text")
+    	.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("People");
-
+      .style("text-anchor", "end");
 }
 
 
@@ -145,7 +426,7 @@ function addCasesLine (data) {
 	  svg.append("path")
       .datum(data)
       .attr("class", "cases")
-      .attr("d", casesLine)
+      .attr("d", casesLine);
 }
 
 function addDeathLine (data) {
@@ -163,7 +444,7 @@ function visualize (data) {
   })
 
 	addAxis(data);
-	addCasesLine(data);  
+	addCasesLine(data);
 	addDeathLine(data)
 
 };
