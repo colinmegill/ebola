@@ -7,7 +7,7 @@ var path = require("path"),
 var app = express();
 
 app.use(function(req, res, next) {
-    res.setHeader("Cache-Control", "no-transform,public,max-age=3600,s-maxage=3600");
+    res.setHeader("Cache-Control", "no-transform,public,max-age=0,s-maxage=3600");
     return next();
 });
 
