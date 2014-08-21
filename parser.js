@@ -4,13 +4,14 @@ var _ = require('underscore');
 var path = require("path"),
     express = require("express");
 
+var app = express();
+
 app.use(function(req, res, next) {
     res.setHeader("Cache-Control", "no-transform,public,max-age=3600,s-maxage=3600");
     return next();
 });
 
-var app = express()
-            .use(express.static(__dirname));
+app.use(express.static(__dirname));
 
 var port = process.env.PORT || 3000;
 app.listen(port);
