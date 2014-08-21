@@ -10,6 +10,12 @@ $ git clone
 $ npm install
 ```
 
+###To build:
+
+```
+$ npm run-script build
+```
+
 ###To run locally:
 
 ```
