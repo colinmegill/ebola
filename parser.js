@@ -6,6 +6,17 @@ var path = require("path"),
 
 var app = express();
 
+// redirect if not https
+app.use(function(req, res, next) {
+  if(!/https/.test(req.headers["x-forwarded-proto"])) { // assuming we're running on Heroku, where we're behind a proxy.
+    res.writeHead(302, {
+        Location: "https://" + req.headers.host + req.url
+    });
+    return res.end();
+  }
+  return next();
+});
+
 app.use(function(req, res, next) {
     res.setHeader("Cache-Control", "no-transform,public,max-age=0,s-maxage=3600");
     return next();
