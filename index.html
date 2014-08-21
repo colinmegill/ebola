@@ -2,6 +2,7 @@
 <html>
 <meta charset="utf-8">
 <head>
+	<title>Ebola in 2014</title>
 	<script type="text/javascript" src="//use.typekit.net/xhb3qda.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	<style>
@@ -38,6 +39,10 @@
 			width: 90%;
 			max-width: 1024px;
 			margin: 0 auto;
+		}
+
+		.Row {
+			padding: 0 0 100px;
 		}
 
 		.Header {
@@ -92,7 +97,7 @@
 
 		.Kicker--backdrop {
 			margin: 0;
-			padding: 46px 0 50px;
+			padding: 46px 0 46px;
 		}
 
 		.Kicker--backdrop:before {
@@ -270,22 +275,64 @@
 
 		.Footer {
 			overflow: hidden;
-
-			margin-top: 200px;
-			padding-top: 24px;
+			padding: 24px 0 48px;
 			border-top: 1px solid rgba(157, 183, 197, 1);
 
 			background: rgba(255,255,255,0.4);
 			box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
 			color: rgba(93, 102, 107, 1);
+			text-align: center;
 		}
 
 		.SubtleHeading {
-			margin-top: 0;
-			padding-bottom: 300px;
+			margin: 0 0 36px;
 
 			font-weight: 300;
 			text-align: center;
+		}
+
+		.LogoList {
+			margin: 0 0 60px;
+			padding: 0;
+
+			list-style: none;
+			text-align: center;
+		}
+
+		.LogoList li {
+			display: inline-block;
+			margin-left: 60px;
+
+			vertical-align: top;
+		}
+
+		.LogoList li:first-child {
+			margin-left: 0;
+		}
+
+		.Logo-Polis {
+			width: 200px;
+		}
+
+		.Logo-Formidable {
+			position: relative;
+			top: 12px;
+
+			width: 336px;
+		}
+
+		.Social {
+			margin-top: 5px;
+		}
+
+		.u-MiniCopy {
+			margin: 0;
+
+			font-size: 21px;
+		}
+
+		.u-NoMargin {
+			margin: 0;
 		}
 
 		.u-Overflow {
@@ -309,13 +356,20 @@
 
 <div class="u-Overflow">
 	<div class="Container">
-		<p class="Kicker Kicker--backdrop">This site is auto updating. It is always based on <a href="http://healthmap.org/ebola/">the most recent data posted to healthmap.</a> We built it because we kept asking the questions: what's the rate of increase? Is it exponential? How do rates of new cases compare to deaths? These questions are at the heart of the story of Ebola, and need to be answered on a continual basis.</p>
+		<div class="Kicker Kicker--backdrop">
+			<p class="u-NoMargin">This site is auto updating. It is always based on <a href="http://healthmap.org/ebola/">the most recent data posted to healthmap.</a> We built it because we kept asking the questions: what's the rate of increase? Is it exponential? How do rates of new cases compare to deaths? These questions are at the heart of the story of Ebola, and need to be answered on a continual basis.</p>
+
+			<div class="Social">
+				<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+				<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;width&amp;layout=button_count&amp;action=recommend&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=130905330306774" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="Chart"></div>
 
-<div class="Container">
+<div class="Container Row">
 	<h2 class="Subheading">How you can help</h2>
 
 	<p class="Kicker">The United Nations World Food Program (WFP) is feeding people in quarantine zones. <a href="https://www.wfp.org/stories/wfp-response-ebola">They are presently scaling up their operations in affected regions</a> to serve over 1,000,000 human beings across 3 countries. Their efforts are critical in preventing a medical crisis from becoming a broader humanitarian crisis. Please help them help others.</p>
@@ -338,9 +392,24 @@
 </div>
 
 <footer class="Footer">
-	<h2 class="SubtleHeading">A collaboration</h2>
+	<div class="Container">
+		<h2 class="SubtleHeading">Built by</h2>
 
+		<ul class="LogoList">
+			<li>
+				<a href="http://pol.is">
+					<img class="Logo Logo-Polis" src="assets/polis.png" alt="Polis">
+				</a>
+			</li>
+			<li>
+				<a href="http://formidablelabs.com">
+					<img class="Logo Logo-Formidable" src="assets/formidable-labs.png" alt="Formidable Labs">
+				</a>
+			</li>
+		</ul>
 
+		<p class="u-MiniCopy">Biostatistician? Epidemiologist? Help us improve the site by submitting issues and pull requests on <a href="https://github.com/colinmegill/ebola">GitHub</a>.</p>
+	</div>
 </footer>
 
 
@@ -478,5 +547,6 @@ d3.json("/ebola", function(error, json) {
 });
 
 </script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 </body>
 </html>
