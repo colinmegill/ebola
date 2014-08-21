@@ -7,6 +7,11 @@ var path = require("path"),
 var app = express()
             .use(express.static(__dirname));
 
+app.use(function(req, res, next) {
+    res.setHeader("Cache-Control", "no-transform,public,max-age=3600,s-maxage=3600");
+    return next();
+});
+  
 var port = process.env.PORT || 3000;
 app.listen(port);
 console.log("ebola on port " + port)
