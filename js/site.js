@@ -70,17 +70,27 @@ function addAxis (data) {
 
 function addCasesLine (data) {
 
-    svg.append("path")
-      .datum(data)
+    svg.selectAll(".cases")
+      .data(data)
+      .enter()
+      .append("circle")
       .attr("class", "cases")
-      .attr("d", casesLine);
+      .attr("r", 3.5)
+      .attr("cx", function(d) { return x(d.date); })
+      .attr("cy", function(d) { return y(d.cases); });
 }
 
-function addDeathLine (data) {
-      svg.append("path")
-      .datum(data)
+function addDeathLine (data) {   
+   
+    svg.selectAll(".deaths")
+      .data(data)
+      .enter()
+      .append("circle")
       .attr("class", "deaths")
-      .attr("d", deathLine)
+      .attr("r", 3.5)
+      .attr("cx", function(d) { return x(d.date); })
+      .attr("cy", function(d) { return y(d.deaths); });      
+
 }
 
 
