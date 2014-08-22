@@ -17,7 +17,10 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("left");
+    .orient("left")
+    .tickFormat(function (d) {
+        return y.tickFormat(10,d3.format(",d"))(d)
+	});
 
 var casesLine = d3.svg.line()
     .x(function(d) { return x(d.date); })
@@ -58,7 +61,7 @@ function addAxis (data) {
       .call(xAxis);
 
   svg.append("g")
-      .attr("class", "y axis")
+      .attr("class", "yaxis")
       .call(yAxis)
       .append("text")
       .attr("transform", "rotate(-90)")
@@ -102,8 +105,82 @@ function visualize (data) {
 
   addAxis(data);
   addCasesLine(data);
-  addDeathLine(data)
+  addDeathLine(data);
 
+	d3.select("#log")
+        .on("click", function(d,i) {
+            switchToLog(data);
+		})  
+		
+	d3.select("#linear")
+        .on("click", function(d,i) {
+            switchToLinear(data);
+		})  		
+
+};
+
+function switchToLog(data) {
+
+	var max = d3.max(data, function(d) {
+    	return d.cases;
+	});
+
+	y = d3.scale.log()
+    .range([height, 0])
+    .domain([50, max]);	
+
+	svg.selectAll(".cases").data(data)
+    	.transition().duration(1000)
+    	.attr("cy", function(d) { return y(d.cases); });
+    	
+	svg.selectAll(".deaths").data(data)
+    	.transition().duration(1000)
+    	.attr("cy", function(d) { return y(d.deaths); });    	
+
+	svg.selectAll(".yaxis")
+		.transition().duration(1000)
+		.call(yAxis.scale(y));
+		
+	svg.selectAll(".textCases")
+		.transition().duration(1000)
+		.attr("y", "40%");		
+		
+	svg.selectAll(".textDeath")
+		.transition().duration(1000)
+		.attr("y", "45%");				
+		
+};
+
+function switchToLinear(data) {
+
+	var max = d3.max(data, function(d) {
+    	return d.cases;
+	});
+
+	y = d3.scale.linear()
+    	.range([height, 0])
+    	.domain([1, max]);
+
+	svg.selectAll(".cases").data(data)
+    	.transition().duration(1000)
+    	.attr("cy", function(d) { return y(d.cases); });
+    	
+	svg.selectAll(".deaths").data(data)
+    	.transition().duration(1000)
+    	.attr("cy", function(d) { return y(d.deaths); });    	
+
+	svg.selectAll(".yaxis")
+		.transition().duration(1000)
+		.call(yAxis.scale(y));
+		
+	svg.selectAll(".textCases")
+		.transition().duration(1000)
+		.attr("y", "70%");		
+		
+	svg.selectAll(".textDeath")
+		.transition().duration(1000)
+		.attr("y", "75%");				
+		
 };
 
 
