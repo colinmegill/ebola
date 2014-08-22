@@ -1,7 +1,8 @@
 ebola
 =====
 
-Auto-updating statistics on the 2014 ebola outbreak in D3 &amp; call to actions for charity
+Auto-updating statistics on the 2014 ebola outbreak in D3 &amp; call to actions for charity.
+See the live site at https://ebolastats.com/
 
 ###To setup
 
