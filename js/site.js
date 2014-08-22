@@ -17,7 +17,10 @@ var xAxis = d3.svg.axis()
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient("left");
+    .orient("left")
+    .tickFormat(function (d) {
+        return y.tickFormat(10,d3.format(",d"))(d)
+	});
 
 var casesLine = d3.svg.line()
     .x(function(d) { return x(d.date); })
@@ -58,7 +61,7 @@ function addAxis (data) {
       .call(xAxis);
 
   svg.append("g")
-      .attr("class", "y axis")
+      .attr("class", "yaxis")
       .call(yAxis)
       .append("text")
       .attr("transform", "rotate(-90)")
@@ -70,17 +73,38 @@ function addAxis (data) {
 
 function addCasesLine (data) {
 
-    svg.append("path")
-      .datum(data)
+	svg.append("path")
+		.datum(logFit(data))
+		.attr("class", "casesline")
+		.attr("d", casesLine); 
+
+    svg.selectAll(".cases")
+      .data(data)
+      .enter()
+      .append("circle")
       .attr("class", "cases")
-      .attr("d", casesLine);
+      .attr("r", 3.5)
+      .attr("cx", function(d) { return x(d.date); })
+      .attr("cy", function(d) { return y(d.cases); });
+            
 }
 
-function addDeathLine (data) {
-      svg.append("path")
-      .datum(data)
+function addDeathLine (data) {   
+
+	svg.append("path")
+		.datum(logFit(data))
+		.attr("class", "deathline")
+		.attr("d", deathLine); 
+   
+    svg.selectAll(".deaths")
+      .data(data)
+      .enter()
+      .append("circle")
       .attr("class", "deaths")
-      .attr("d", deathLine)
+      .attr("r", 3.5)
+      .attr("cx", function(d) { return x(d.date); })
+      .attr("cy", function(d) { return y(d.deaths); });      
+
 }
 
 
@@ -92,28 +116,113 @@ function visualize (data) {
 
   addAxis(data);
   addCasesLine(data);
-  addDeathLine(data)
+  addDeathLine(data);
+
+	d3.select("#log")
+        .on("click", function(d,i) {
+            switchToLog(data);
+		})  
+		
+	d3.select("#linear")
+        .on("click", function(d,i) {
+            switchToLinear(data);
+		})  		
 
 };
 
+function switchToLog(data) {
 
-function expFit(xys) {
-  var xys_ = _.map(data, function(xy) {
-      return [xy[0], Math.log(xy[1])]
+	var max = d3.max(data, function(d) {
+    	return d.cases;
+	});
+
+	y = d3.scale.log()
+    .range([height, 0])
+    .domain([50, max]);	
+    		
+	svg.selectAll(".casesline").datum(logFit(data))
+		.transition().duration(1000)
+		.attr("d", casesLine);		
+		
+	svg.selectAll(".deathline").datum(logFit(data))
+		.transition().duration(1000)
+		.attr("d", deathLine);				
+
+	svg.selectAll(".cases").data(data)
+    	.transition().duration(1000)
+    	.attr("cy", function(d) { return y(d.cases); });
+    	
+	svg.selectAll(".deaths").data(data)
+    	.transition().duration(1000)
+    	.attr("cy", function(d) { return y(d.deaths); });    	
+
+	svg.selectAll(".yaxis")
+		.transition().duration(1000)
+		.call(yAxis.scale(y));
+		
+	svg.selectAll(".textCases")
+		.transition().duration(1000)
+		.attr("y", "40%");		
+		
+	svg.selectAll(".textDeath")
+		.transition().duration(1000)
+		.attr("y", "45%");				
+		
+};
+
+function switchToLinear(data) {
+
+	var max = d3.max(data, function(d) {
+    	return d.cases;
+	});
+
+	y = d3.scale.linear()
+    	.range([height, 0])
+    	.domain([1, max]);
+    	
+	svg.selectAll(".casesline").datum(logFit(data))
+		.transition().duration(1000)
+		.attr("d", casesLine);	
+		
+	svg.selectAll(".deathline").datum(logFit(data))
+		.transition().duration(1000)
+		.attr("d", deathLine);				    	
+
+	svg.selectAll(".cases").data(data)
+    	.transition().duration(1000)
+    	.attr("cy", function(d) { return y(d.cases); });
+    	
+	svg.selectAll(".deaths").data(data)
+    	.transition().duration(1000)
+    	.attr("cy", function(d) { return y(d.deaths); });    	
+
+	svg.selectAll(".yaxis")
+		.transition().duration(1000)
+		.call(yAxis.scale(y));
+		
+	svg.selectAll(".textCases")
+		.transition().duration(1000)
+		.attr("y", "70%");		
+		
+	svg.selectAll(".textDeath")
+		.transition().duration(1000)
+		.attr("y", "75%");				
+		
+};
+
+function logFit(data) {
+  var casesForFit = data.map(function(d) {
+      return [d.date.valueOf(), Math.log(d.cases)];
       });
-  var linFit = ss.linear_regression().data(xys_);
-  var expFun = function(x) {
-    return Math.exp(linFit.m() * x + linFit.b());
-  };
-  return expFun;
-}
-
-
-function fitData(data, variable) {
-  var forFit = _.map(data, function(d) {
-      return [d.date.vlaueOf(), d[variable]];
+  cases_regression_line = ss.linear_regression().data(casesForFit).line();
+  var deathsForFit = data.map(function(d) {
+      return [d.date.valueOf(), Math.log(d.deaths)];
       });
-  return expFit(forFit);
+  deaths_regression_line = ss.linear_regression().data(deathsForFit).line();  
+  var fitted = data.map(function(d) {
+      return {date: d.date, cases: Math.exp(cases_regression_line(d.date.valueOf())), deaths: Math.exp(deaths_regression_line(d.date.valueOf()))};
+      });
+  return fitted;
 }
 
 
