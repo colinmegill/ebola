@@ -16,6 +16,19 @@
 			background-repeat: no-repeat;
 		}
 
+		.chartButton {
+			background-color: #fff;
+			padding: 10px 20px;
+			border: none;
+			font-family: freight-sans-pro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size: 16px;
+		}
+
+		.chartButton:hover {
+			background-color: #FFF0B2;
+			cursor: pointer;
+		}
+
 		@media only screen and (min-width: 400px) {
 			html {
 				background-position: -190px -480px;
@@ -232,27 +245,27 @@
 		}
 
 		.cases {
-			fill: none;
-			stroke: #97c5eb;
-			stroke-width: 4px;
+			fill: #97c5eb;
+			stroke: none;
+			/*stroke-width: 2px;*/
 		}
 		
 		.casesline {
 			fill: none;
 			stroke: #97c5eb;
-			stroke-width: 4px;
+			stroke-width: 1px;
 		}		
 
 		.deaths {
-			fill: none;
-			stroke: #ec7878;
-			stroke-width: 4px;
+			fill: #ec7878;
+			stroke: none;
+			/*stroke-width: 2px;*/
 		}
 		
 		.deathline {
 			fill: none;
 			stroke: #ec7878;
-			stroke-width: 4px;
+			stroke-width: 1px;
 		}	
 
 		.textDeath {
@@ -477,9 +490,13 @@
 	</div>
 </div>
 
-<div class="Chart"></div>
-<button id="log"">log axis</button>
-<button id="linear"">linear axis</button>
+<div class="Chart">
+<div style="text-align: center">
+	<button id="log" class="chartButton">log axis</button>
+	<button id="linear" class="chartButton">linear axis</button>
+</div>
+</div>
+
 
 <div class="Container Row">
 	<h2 class="Subheading">How you can help</h2>

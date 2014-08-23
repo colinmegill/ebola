@@ -1,6 +1,7 @@
 var request = require('request');
 var cheerio = require('cheerio');
 var _ = require('underscore');
+var lodash = require('lodash');
 var path = require("path"),
     express = require("express");
 
@@ -63,8 +64,10 @@ function cleanup (dataset) {
 		entry.deaths = deathSum;
 	})
 
-	console.log(sum)
-	return sum;
+	var dedup = lodash.uniq(sum, 'cases')
+
+	return dedup;
+
 }
 
 app.get('/ebola', function(req,res){
