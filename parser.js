@@ -43,6 +43,7 @@ function cleanup (dataset) {
 	})
 	var removeWords = _.each(withoutEmptyDatesOrCases, function(entry){
 		entry.cases = entry.cases.replace(/cases/g, "");
+		entry.cases = entry.cases.replace(/case/g, "");
 		entry.deaths = entry.deaths.replace(/deaths/g, "")
 		entry.deaths = entry.deaths.replace(/death/g, "")
 
@@ -52,6 +53,7 @@ function cleanup (dataset) {
 		entry.deaths = entry.deaths.split(" ");
 	})
 	var sum = _.each(splitNumbers, function(entry){
+
 		var caseSum = 0;
 		var deathSum = 0;
 		entry.cases.forEach(function(d){
@@ -66,6 +68,7 @@ function cleanup (dataset) {
 
 	var dedup = lodash.uniq(sum, 'cases')
 
+	console.log(dedup)
 	return dedup;
 
 }
