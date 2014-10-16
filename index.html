@@ -23,11 +23,21 @@
 			font-family: freight-sans-pro, "Helvetica Neue", Helvetica, Arial, sans-serif;
 			font-size: 16px;
 		}
-
+		
 		.chartButton:hover {
 			background-color: #FFF0B2;
 			cursor: pointer;
 		}
+
+		.selected {
+			background-color: #555;
+			color: #fff;
+		}	
+		
+		.selected:hover {
+			background-color: #555;
+			color: #fff;
+		}	
 
 		@media only screen and (min-width: 400px) {
 			html {
@@ -493,7 +503,10 @@
 <div class="Chart">
 <div style="text-align: center">
 	<button id="log" class="chartButton">log axis</button>
-	<button id="linear" class="chartButton">linear axis</button>
+	<button id="linear" class="chartButton selected">linear axis</button>
+	<span style="margin: 0 15px;"></span>
+	<button id="interval" class="chartButton">new reports</button>
+	<button id="cumulative" class="chartButton selected">cumulative reports</button>
 </div>
 </div>
 
