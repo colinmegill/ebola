@@ -165,23 +165,31 @@ function visualize (data) {
 	d3.select("#log")
         .on("click", function(d,i) {
             switchToLog(data);
+			d3.select("#log").classed("selected", true);
+			d3.select("#linear").classed("selected", false);
 		})  
 		
 	d3.select("#linear")
         .on("click", function(d,i) {
             switchToLinear(data);
+			d3.select("#log").classed("selected", false);            
+			d3.select("#linear").classed("selected", true);
 		})  
 		
 	d3.select("#interval")
         .on("click", function(d,i) {
         	data = intervalData;
             switchToInterval(data);
+			d3.select("#interval").classed("selected", true);
+			d3.select("#cumulative").classed("selected", false);			
 		})  	
 		
 	d3.select("#cumulative")
         .on("click", function(d,i) {
         	data = cumulativeData;
             switchToCumulative(data);
+			d3.select("#interval").classed("selected", false);
+			d3.select("#cumulative").classed("selected", true);	
 		})  						
 
 };
@@ -338,7 +346,7 @@ function switchToCumulative(data) {
 		
 	svg.selectAll(".textDeath")
 		.transition().duration(1000)
-		.attr("y", "15%");				
+		.attr("y", "15%");	
 		
 };
 
