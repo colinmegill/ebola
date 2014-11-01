@@ -16,6 +16,10 @@
 			background-repeat: no-repeat;
 		}
 
+		.d3-tip {
+			color: white;
+		}
+
 		.chartButton {
 			background-color: #fff;
 			padding: 10px 20px;
@@ -25,19 +29,19 @@
 		}
 		
 		.chartButton:hover {
-			background-color: #FFF0B2;
+			/*background-color: #FFF0B2;*/
 			cursor: pointer;
 		}
 
 		.selected {
-			background-color: #555;
-			color: #fff;
+			background-color: rgba(52, 152, 219,1);
+			color: white;
 		}	
 		
-		.selected:hover {
-			background-color: #555;
-			color: #fff;
-		}	
+/*		.selected:hover {
+			background-color: rgba(52, 152, 219,1);
+			color: white;
+		}	*/
 
 		@media only screen and (min-width: 400px) {
 			html {
@@ -477,6 +481,7 @@
 		.u-AlignRight {
 			text-align: right;
 		}
+
 	</style>
 </head>
 <body>
@@ -562,7 +567,11 @@
 	</div>
 </footer>
 
-<script src="site.min.js"></script>
+<script src="js/simple_statistics.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/d3.js"></script>
+<script src="bower_components/d3-tip/index.js"></script>
+<script src="js/site.js"></script>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 </body>
 </html>

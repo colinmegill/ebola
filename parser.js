@@ -70,8 +70,15 @@ function cleanup (dataset) {
 
 	console.log(dedup)
 	return dedup;
-
 }
+
+// NOT NECESSARY WHEN WE SWAP DATA SOURCE
+// function addDatesToYear(dataset) {
+// 	var startYear = 2014;
+// 	_.reduce(dataset, function(memo, datum) {
+// 		var lastDate = _.last(memo) ? _.last(memo).date
+// 	}, []);
+// }
 
 app.get('/ebola', function(req,res){
 	request('http://healthmap.org/ebola/', function (error, response, body) {

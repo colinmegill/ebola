@@ -28,7 +28,8 @@ var casesLine = d3.svg.line()
 
 var deathLine = d3.svg.line()
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.deaths); });
+    .y(function(d) { return y(d.deaths);  });
+
 
 var svg = d3.select(".Chart").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -90,12 +91,13 @@ function addCasesLine (data) {
       .attr("class", "cases")
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(d.date); })
-      .attr("cy", function(d) { return y(d.cases); });
+      .attr("cy", function(d) { return y(d.cases); })
+    //   .on('mouseover', tip.show)
+  		// .on('mouseout', tip.hide)
             
 }
 
 function addDeathLine (data) {   
-
 	svg.append("path")
 		.datum(logFit(data))
 		.attr("class", "deathline")
@@ -108,12 +110,25 @@ function addDeathLine (data) {
       .attr("class", "deaths")
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(d.date); })
-      .attr("cy", function(d) { return y(d.deaths); });      
+      .attr("cy", function(d) { return y(d.deaths); })
+      .on('mouseover', tip.show)
+  		.on('mouseout', tip.hide)     
+
+
 
 }
 
 
 function visualize (data) {
+
+	/* Initialize tooltip */
+	tip = d3.tip().attr('class', 'd3-tip').html(function(d) { 
+		// tipText = d.date.getMonth() + "/" + d.date.getDay();
+		return d.date.toDateString()
+	});
+
+	/* Invoke the tip in the context of your visualization */
+	svg.call(tip)
 
 	data = _.each(data, function(d){
 		d.date = parseDate(d.date);
@@ -149,13 +164,14 @@ function visualize (data) {
 		prevCases = d.cases;
 		prevDeaths = d.deaths;
 		prevDate = d.date;
-		if (h.cases == 0) {
+		if (h.cases <= 0) {
 			h.cases = 0.1;
 		}
-		if (h.deaths == 0) {
+		if (h.deaths <= 0) {
 			h.deaths = 0.1;
 		}		
 		intervalData.push(h);
+		
 	});	
 
 	addAxis(data);
@@ -177,12 +193,12 @@ function visualize (data) {
 		})  
 		
 	d3.select("#interval")
-        .on("click", function(d,i) {
-        	data = intervalData;
-            switchToInterval(data);
-			d3.select("#interval").classed("selected", true);
-			d3.select("#cumulative").classed("selected", false);			
-		})  	
+			.on("click", function(d,i) {
+	      data = intervalData;
+	      switchToInterval(data);
+				d3.select("#interval").classed("selected", true);
+				d3.select("#cumulative").classed("selected", false);			
+			})  	
 		
 	d3.select("#cumulative")
         .on("click", function(d,i) {
@@ -286,10 +302,11 @@ function switchToInterval(data) {
 		.transition().duration(1000)
 		.attr("d", casesLine);	
 		
+
 	svg.selectAll(".deathline").datum(logFit(data))
 		.transition().duration(1000)
-		.attr("d", deathLine);	    	
-    	
+		.attr("d", deathLine);
+
 	svg.selectAll(".cases").data(data)
     	.transition().duration(1000)
     	.attr("cy", function(d) { return y(d.cases); });
@@ -362,6 +379,7 @@ function logFit(data) {
   var fitted = data.map(function(d) {
       return {date: d.date, cases: Math.exp(cases_regression_line(d.date.valueOf())), deaths: Math.exp(deaths_regression_line(d.date.valueOf()))};
       });
+
   return fitted;
 }
 
@@ -370,5 +388,4 @@ d3.json("/ebola", function(error, json) {
   if (error) return console.warn(error);
   data = json;
   visualize(data);
-  console.log(data)
 });
